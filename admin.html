@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrador - TicketSystem</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Encabezado con logo, menú y sesión-->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="logo">
+                <h2>TMP</h2> <!-- Logo del sistema -->
+            </div>
+            <nav class="dashboard-nav">
+                <!-- Navegación principal -->
+                <a href="index.html">Inicio</a>
+                <a href="#reportes-section">Reportes</a>
+
+                <!-- Nombre de usuario (se carga dinámicamente con JS) -->
+                <span id="userName" class="user-name"></span>
+
+                <!-- Botón para cerrar sesión -->
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="dashboard-content">
+        <div class="container">
+
+            <!--Sección de estadística y Resumen rápido de tickets-->
+            <section class="section">
+                <h2>Panel de Control</h2>
+                <div class="stats-grid">
+                    <!-- Total de tickets -->
+                    <div class="stat-card">
+                        <h3 id="totalTickets">0</h3>
+                        <p>Total de Tickets</p>
+                    </div>
+                    <!-- Tickets abiertos -->
+                    <div class="stat-card warning">
+                        <h3 id="openTickets">0</h3>
+                        <p>Tickets Abiertos</p>
+                    </div>
+                    <!-- Tickets cerrados -->
+                    <div class="stat-card success">
+                        <h3 id="closedTickets">0</h3>
+                        <p>Tickets Cerrados</p>
+                    </div>
+                    <!-- Tickets con prioridad alta -->
+                    <div class="stat-card danger">
+                        <h3 id="highPriorityTickets">0</h3>
+                        <p>Prioridad Alta</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gestión de categorías Crear, listar y administrar categorías -->
+            <section class="section">
+                <h2>Gestión de Categorías</h2>
+                <div class="management-grid">
+                    <!-- Formulario para agregar categorías nuevas -->
+                    <div class="management-form">
+                        <h3>Agregar Nueva Categoría</h3>
+                        <form id="categoryForm">
+                            <div class="form-group">
+                                <label for="newCategory">Nombre de la Categoría</label>
+                                <input type="text" id="newCategory" name="newCategory" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Agregar Categoría</button>
+                        </form>
+                    </div>
+
+                    <!-- Lista de categorías existentes -->
+                    <div class="management-list">
+                        <h3>Categorías Existentes</h3>
+                        <div class="table-container">
+                            <table id="categoriesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Categoría</th>
+                                        <th>Tickets</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <!-- Se rellena dinámicamente desde admin.js -->
+                                <tbody id="categoriesTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reportes y estadísticas Se genera a partir de los tickets -->
+            <section class="section" id="reportes-section">
+                <h2>Reportes y Estadísticas</h2>
+
+                <!-- Botón para generar el reporte -->
+                <div class="reports-controls">
+                    <button class="btn btn-primary" onclick="generateReport()">Generar Reporte</button>
+                </div>
+                
+                <!-- Resultados del reporte (ocultos por defecto) -->
+                <div id="reportResults" class="report-results" style="display: none;">
+                    <h3>Resultados del Reporte</h3>
+                    <div class="report-grid">
+                        
+                        <!-- Reporte por estado (abiertos/cerrados/etc.) -->
+                        <div class="report-section">
+                            <h4>Resumen por Estado</h4>
+                            <div class="table-container">
+                                <table id="statusReportTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Estado</th>
+                                            <th>Cantidad</th>
+                                            <th>Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="statusReportBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Reporte por categoría -->
+                        <div class="report-section">
+                            <h4>Resumen por Categoría</h4>
+                            <div class="table-container">
+                                <table id="categoryReportTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Categoría</th>
+                                            <th>Cantidad</th>
+                                            <th>Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="categoryReportBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Reporte por prioridad -->
+                        <div class="report-section">
+                            <h4>Resumen por Prioridad</h4>
+                            <div class="table-container">
+                                <table id="priorityReportTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Prioridad</th>
+                                            <th>Cantidad</th>
+                                            <th>Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="priorityReportBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 TicketSystem.</p>
+        </div>
+    </footer>
+
+    <!-- ============================
+         Scripts del sistema
+         app.js = lógica general
+         admin.js = lógica del administrador
+    ============================= -->
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Usuario - TicketSystem</title>
+    <!-- Estilos generales -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Encabezado del panel -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="logo">
+                <h2>TMP</h2>
+            </div>
+            <!-- Navegación del usuario -->
+            <nav class="dashboard-nav">
+                <a href="index.html">Inicio</a>
+                <a href="#tickests_section">Mis Tickets</a>
+                <span id="userName" class="user-name"></span>
+                <!-- Botón de cierre de sesión -->
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="dashboard-content">
+        <div class="container">
+            <!-- Formulario para crear tickets -->
+            <section class="section">
+                <h2>Crear Nuevo Ticket</h2>
+                <form id="createTicketForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="titulo">Título del Ticket</label>
+                            <input type="text" id="titulo" name="titulo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoría</label>
+                            <select id="categoria" name="categoria" required>
+                                <option value="">Seleccionar categoría</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prioridad">Prioridad</label>
+                            <select id="prioridad" name="prioridad" required>
+                                <option value="">Seleccionar prioridad</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" placeholder="Describe detalladamente el problema..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Crear Ticket</button>
+                </form>
+            </section>
+
+            <!-- Listado de tickets del usuario -->
+            <section class="section">
+                <h2 id="tickests_section">Mis Tickets</h2>
+                <div class="table-container">
+                    <table id="ticketsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Categoría</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticketsTableBody">
+                            <!-- Aquí se cargan dinámicamente los tickets -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 TicketSystem.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts de lógica -->
+    <script src="app.js"></script>
+    <script src="usuario.js"></script>
+</body>
+</html>

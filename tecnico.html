@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Técnico - TicketSystem</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Encabezado con logo, navegación y cierre de sesión-->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="logo">
+                <h2>TMP</h2> <!-- Logo del sistema -->
+            </div>
+            <nav class="dashboard-nav">
+                <a href="index.html">Inicio</a>
+                <!-- Nombre del usuario cargado dinámicamente -->
+                <span id="userName" class="user-name"></span>
+                <!-- Botón para cerrar sesión -->
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <!--
+         Contenido principal
+-->
+    <main class="dashboard-content">
+        <div class="container">
+
+            <!-- 
+                 Sección de estadísticas rápidas
+                 Resumen de tickets asignados al técnico
+            -->
+            <section class="section">
+                <h2>Resumen de Tickets</h2>
+                <div class="stats-grid">
+                    <!-- Total de tickets asignados -->
+                    <div class="stat-card">
+                        <h3 id="totalTickets">0</h3>
+                        <p>Total Asignados</p>
+                    </div>
+                    <!-- Tickets abiertos -->
+                    <div class="stat-card warning">
+                        <h3 id="openTickets">0</h3>
+                        <p>Abiertos</p>
+                    </div>
+                    <!-- Tickets en proceso -->
+                    <div class="stat-card success">
+                        <h3 id="inProgressTickets">0</h3>
+                        <p>En Proceso</p>
+                    </div>
+                    <!-- Tickets cerrados -->
+                    <div class="stat-card danger">
+                        <h3 id="closedTickets">0</h3>
+                        <p>Cerrados</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================
+                 Listado de tickets asignados
+                 Tabla con la información de cada ticket
+            ============================= -->
+            <section class="section">
+                <h2>Tickets Asignados</h2>
+                <div class="table-container">
+                    <table id="ticketsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Usuario</th>
+                                <th>Categoría</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th> <!-- Ver detalles, actualizar, eliminar -->
+                            </tr>
+                        </thead>
+                        <!-- Cuerpo dinámico generado desde tecnico.js -->
+                        <tbody id="ticketsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ============================
+                 Modal de detalles del ticket
+                 Se muestra al hacer clic en un ticket
+            ============================= -->
+            <div id="ticketModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <!-- Encabezado del modal -->
+                    <div class="modal-header">
+                        <h3>Detalles del Ticket</h3>
+                        <!-- Botón para cerrar el modal -->
+                        <span class="close" onclick="closeModal()">&times;</span>
+                    </div>
+
+                    <!-- Cuerpo del modal con la información del ticket -->
+                    <div class="modal-body">
+                        <div class="ticket-details">
+                            <div class="detail-row">
+                                <strong>ID:</strong> <span id="modalTicketId"></span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Título:</strong> <span id="modalTicketTitle"></span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Usuario:</strong> <span id="modalTicketUser"></span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Categoría:</strong> <span id="modalTicketCategory"></span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Prioridad:</strong> <span id="modalTicketPriority"></span>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Descripción:</strong>
+                                <p id="modalTicketDescription"></p>
+                            </div>
+                            <div class="detail-row">
+                                <strong>Estado Actual:</strong> <span id="modalTicketStatus"></span>
+                            </div>
+                        </div>
+
+                        <!-- Controles para actualizar o eliminar ticket -->
+                        <div class="status-update">
+                            <label for="newStatus">Actualizar Estado:</label>
+                            <select id="newStatus">
+                                <option value="Abierto">Abierto</option>
+                                <option value="En Proceso">En Proceso</option>
+                                <option value="Cerrado">Cerrado</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="updateTicketStatus()">Actualizar</button>
+                            <button class="btn btn-danger" onclick="deleteTicket()">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 TicketSystem.</p>
+        </div>
+    </footer>
+
+    <!-- 
+         Scripts principales
+         app.js = lógica general del sistema
+         tecnico.js = lógica para el panel técnico-->
+    <script src="app.js"></script>
+    <script src="tecnico.js"></script>
+</body>
+</html>
